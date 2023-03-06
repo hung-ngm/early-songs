@@ -11,8 +11,7 @@ import {Preview} from "../../modules/preview";
 // import {FollowSteps} from "../../modules/followSteps";
 import { SelectOption, TRoyaltiesMap } from "./types";
 // import { deployEncrypted } from "../../../../utils/lighthouse/upload";
-// import { storeMetadata, storeDatasetThumbnail } from "../../../../utils/web3Storage/store";
-
+import { storeMetadata, storeSongThumbnail } from "../../../../utils/web3Storage/store";
 
 const genresOptions = ["Classical", "Country", "Dance & EDM", "Hip-hop & Rap", "Pop", "R&B & Soul"];
 const dayOptions = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
@@ -28,21 +27,6 @@ const getDayOptions = (month: string) => {
     }
     return dayOptions;
 }
-
-// Use number in Solidity smart contracts
-const royaltiesMap: TRoyaltiesMap = {
-  "2%": 200,
-  "5%": 500,
-  "10%": 1000,
-}
-
-const options = [
-  { label: "Music", value: 1 },
-  { label: "Movie", value: 2 },
-  { label: "University", value: 3 },
-  { label: "Education", value: 4 },
-  { label: "NLP", value: 5 },
-]
 
 const UploadDatasetDetails:FC = () => {
   const [genres, setGenres] = useState<string>(genresOptions[0]);
@@ -78,11 +62,11 @@ const UploadDatasetDetails:FC = () => {
   }
 
   const handleThumbnailUploaded = async (e: any) => {
-    // const datasetThumbnailUrl = await storeDatasetThumbnail(e);
-    // console.log('Store dataset thumbnail with url', datasetThumbnailUrl);
-    // if (datasetThumbnailUrl) {
-    //   setThumbnailUrl(datasetThumbnailUrl);
-    // }
+    const songThumbnailUrl = await storeSongThumbnail(e);
+    console.log('Store dataset thumbnail with url', songThumbnailUrl);
+    if (songThumbnailUrl) {
+      setThumbnailUrl(songThumbnailUrl);
+    }
   }
   
   const handleCreateItem = async () => {
@@ -146,7 +130,7 @@ const UploadDatasetDetails:FC = () => {
                   <div className={styles.file}>
                     <input 
                       onChange={async (e: any) => { 
-                        // await handleThumbnailUploaded(e);
+                        await handleThumbnailUploaded(e);
                       }}
                       className={styles.load} 
                       type="file" 
@@ -209,9 +193,7 @@ const UploadDatasetDetails:FC = () => {
                         />
                       </div>
                     </div>
-
-                      
-                    
+                         
                   </div>
                 </div>
 
