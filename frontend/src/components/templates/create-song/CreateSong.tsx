@@ -6,11 +6,11 @@ import {Icon} from "../../modules/icon";
 import {TextInput} from "../../modules/textInput";
 import {TextArea} from "../../modules/textArea";
 // import {Loader} from "../../modules/loader";
-// import {Modal} from "../../modules/modal";
+import {Modal} from "../../modules/modal";
 import {Preview} from "../../modules/preview";
-// import {FollowSteps} from "../../modules/followSteps";
+import {FollowSteps} from "../../modules/followSteps";
 import { SelectOption, TRoyaltiesMap } from "./types";
-// import { deployEncrypted } from "../../../../utils/lighthouse/upload";
+import { deployEncrypted } from "../../../../utils/lighthouse/upload";
 import { storeMetadata, storeSongThumbnail } from "../../../../utils/web3Storage/store";
 
 const genresOptions = ["Classical", "Country", "Dance & EDM", "Hip-hop & Rap", "Pop", "R&B & Soul"];
@@ -39,9 +39,8 @@ const UploadDatasetDetails:FC = () => {
   const [mintPrice, setMintPrice] = useState<string>("");
   
   // Used in lighthouse upload
-  const [dataUrl, setDataUrl] = useState<string>("");
+  const [songUrl, setSongUrl] = useState<string>("");
   const [songSize, setSongSize] = useState<number>();
-  const [fileName, setFileName] = useState<string>("");
 
   // Used in web3 storage metadata upload
   const [metadataUrl, setMetadataUrl] = useState<string>("");
@@ -52,13 +51,12 @@ const UploadDatasetDetails:FC = () => {
   const [day, setDay] = useState<string>(getDayOptions(month)[0]);
   const [year, setYear] = useState<string>(yearOptions[0]);
 
-  const handleDatasetUploaded = async (e: any) => {
-    // const res = await deployEncrypted(e);
-    // console.log(res); 
-    // const { DataUrl, Size, Name } = res;
-    // setDataUrl(DataUrl);
-    // setDataSize(Size);
-    // setFileName(Name);
+  const handleSongUploaded = async (e: any) => {
+    const res = await deployEncrypted(e);
+    console.log(res); 
+    const { SongUrl, Size } = res;
+    setSongUrl(SongUrl);
+    setSongSize(Size);
   }
 
   const handleThumbnailUploaded = async (e: any) => {
@@ -109,7 +107,7 @@ const UploadDatasetDetails:FC = () => {
                   <div className={styles.file}>
                     <input 
                       onChange={async (e) => { 
-                        // await handleDatasetUploaded(e);
+                        await handleSongUploaded(e);
                       }}
                       className={styles.load} 
                       type="file" 
@@ -271,15 +269,15 @@ const UploadDatasetDetails:FC = () => {
           />
         </div>
       </div>
-      {/* <Modal visible={visibleModal} onClose={() => setVisibleModal(false)}>
+      <Modal visible={visibleModal} onClose={() => setVisibleModal(false)}>
         <FollowSteps
           className={styles.steps}
-          dataUrl={dataUrl}
-          metadata={metadataUrl}
-          feeNumerator={royaltiesMap[royalties]}
-          price={Number(price)}
+          dataUrl={"hungng"}
+          metadata={"hungng"}
+          feeNumerator={200}
+          price={Number(mintPrice)}
         />
-      </Modal> */}
+      </Modal>
     </>
   );
 };

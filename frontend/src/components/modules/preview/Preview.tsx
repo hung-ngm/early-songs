@@ -25,7 +25,7 @@ const Preview: FC<TPreview> = ({ className, onClose, songName, mintPrice, thumbn
           <div className={styles.link}>
             <div className={styles.body}>
               <div className={styles.line}>
-                <div className={styles.title}>{songName?songName:"Set yout song's name"}</div>
+                <div className={styles.title}>{songName?songName:"Set your song's name"}</div>
                 <div className={styles.price}>{mintPrice} FTM</div>
               </div>
             </div>
