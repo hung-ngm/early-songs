@@ -3,7 +3,7 @@ import { FC, useState } from "react";
 import { CustomLink } from "../../customLink";
 import cn from "classnames";
 import OutsideClickHandler from "react-outside-click-handler";
-import styles from "../../../../styles/modules/header/user/User.module.sass";
+import styles from "./User.module.sass";
 import { Icon } from "../../icon";
 import { TUser } from "./types";
 import { signOut } from "next-auth/react";

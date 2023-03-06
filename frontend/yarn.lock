@@ -4306,6 +4306,11 @@ react-dom@18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-interpunct@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-interpunct/-/react-interpunct-1.0.4.tgz#6b7cd5646ac65daa07f106a8b62417cbbaa47c70"
+  integrity sha512-ezSLEgr3WYF+wYuFU66Gp3q6XgrYcz37UeCrgzR7/w6N9MsKwbvj7bZJDL8kjXGv5arLmIgwCBRqMiiF+m0QvA==
+
 react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"

@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { CustomLink } from '../customLink';
 import cn from "classnames";
-import styles from "../../../styles/modules/header/Header.module.sass";
+import styles from "./Header.module.sass";
 import { Image } from "../image";
 import { Icon } from "../icon";
 import { User } from "./user";
@@ -70,9 +70,9 @@ const Header: FC = () => {
           <>
             <CustomLink
               className={cn("button-small", styles.button)}
-              href="/upload-variants"
+              href="/create-song"
             >
-              Upload
+              Create
             </CustomLink>
             <User className={styles.user} />
           </>
