@@ -4,8 +4,6 @@ import { earlySongsPlatformAddress } from '../../../utils/addresses';
 import ShareableSong from '../../../abis/ShareableSong.json';
 
 export const createNewSongContract = async (
-    name: string,
-    symbol: string,
     metadata: string,
     timestamp: number,
     maxSupply: number,
@@ -24,8 +22,6 @@ export const createNewSongContract = async (
 
         // Deploy the contract for the new released song
         const songContract = await factory.deploy(
-            name,
-            symbol,
             metadata,
             timestamp,
             maxSupply,

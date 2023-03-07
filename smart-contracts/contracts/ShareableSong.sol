@@ -25,13 +25,11 @@ contract ShareableSong is ERC721URIStorage, Ownable, IERC5023 {
     address platformAddress;
 
     constructor(
-        string memory _name,
-        string memory _symbol,
         string memory metadata_,
         uint256 _timestamp,
         uint256 _maxSupply,
         address _platformAddress
-    ) ERC721(_name, _symbol) {
+    ) ERC721("New Release Song", "SNFT") {
         _metadata = metadata_;
         timestamp = _timestamp;
         maxSupply = _maxSupply;
