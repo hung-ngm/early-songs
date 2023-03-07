@@ -1,0 +1,1 @@
+export const earlySongsPlatformAddress = "0x99A19a5adCe95Cb1EEcE9534DA62e34e487db36C";
