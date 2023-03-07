@@ -1,9 +1,9 @@
 import { ethers } from 'ethers';
 import Web3Modal from 'web3modal';
-import { earlySongsPlatformAddress } from '../../utils/addresses';
-import ShareableSong from '../../abis/ShareableSong.json';
+import { earlySongsPlatformAddress } from '../../../utils/addresses';
+import ShareableSong from '../../../abis/ShareableSong.json';
 
-export const createNewSong = async (
+export const createNewSongContract = async (
     name: string,
     symbol: string,
     metadata: string,
