@@ -14,7 +14,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 
-contract ShareableERC721 is ERC721URIStorage, Ownable, IERC5023 {
+contract ShareableSong is ERC721URIStorage, Ownable, IERC5023 {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     string private _metadata;

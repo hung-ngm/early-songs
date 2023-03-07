@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "./ShareableERC721.sol";
+import "./ShareableSong.sol";
 
 contract EarlySongsPlatform is ReentrancyGuard {
     using Counters for Counters.Counter;
@@ -73,7 +73,7 @@ contract EarlySongsPlatform is ReentrancyGuard {
         // Transfer mintPrice to artist
         idToPlatformItem[itemId].artist.transfer(mintPrice);
 
-        ShareableERC721 nftContract = ShareableERC721(idToPlatformItem[itemId].nftContract);
+        ShareableSong nftContract = ShareableSong(idToPlatformItem[itemId].nftContract);
         uint256 newTokenId = nftContract.mint(msg.sender);
 
         return newTokenId;
