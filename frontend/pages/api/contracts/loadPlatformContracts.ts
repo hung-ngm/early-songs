@@ -3,8 +3,9 @@ import axios from 'axios';
 import { earlySongsPlatformAddress } from '../../../utils/addresses';
 import EarlySongsPlatform from '../../../abis/EarlySongsPlatform.json';
 import SharableSong from '../../../abis/ShareableSong.json';
+import { TPlatformItem } from '../../../types/TPlatformItem';
 
-export const loadPlatformContracts = async () : Promise<any[]> => {
+export const loadPlatformContracts = async () : Promise<TPlatformItem[]> => {
     const provider = new ethers.providers.JsonRpcProvider("https://fantom-testnet.public.blastapi.io");
     const platformContract = new ethers.Contract(
         earlySongsPlatformAddress,
@@ -32,7 +33,7 @@ export const loadPlatformContracts = async () : Promise<any[]> => {
         // genres: array of string
         
         const item = {
-            itemId: i.itemId,
+            itemId: Number(i.itemId),
             nftContract: i.nftContract,
             artist: i.artist,
             mintPrice: (Number(wei)).toString(),
