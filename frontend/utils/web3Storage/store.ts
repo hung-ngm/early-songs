@@ -1,5 +1,4 @@
 import { Web3Storage } from 'web3.storage';
-import { SelectOption } from '../../src/components/templates/create-song/types';
 
 const WEB3STORAGE_API_KEY = process.env.NEXT_PUBLIC_WEB3STORAGE_API_KEY || "";
 
@@ -8,32 +7,29 @@ const makeStorageClient =  () => {
 }
 
 const makeFileObjects = (
-    name: string,
-    context: string,
-    contains: string,
-    sources: string,
-    tags: SelectOption[],
+    songUrl: string,
     thumbnailUrl: string,
-    fileName: string,
+    songName: string,
+    description: string,
+    availableDay: string,
+    genres: string,
     fileSize: number,
 ) => {
     // You can create File objects from a Blob of binary data
     // see: https://developer.mozilla.org/en-US/docs/Web/API/Blob
     // Here we're just storing a JSON object, but you can store images,
     // audio, or whatever you want!
-    if (!name || !context || !contains || !sources || !tags) return;
+    if (!songName || !songUrl || !thumbnailUrl || !songName || !description || !availableDay || !genres || !fileSize) return;
     
-    const tagsArr = tags.map((tag) => tag.label);
     
     const obj = { 
-        name: name,
-        context: context,
-        contains: contains,
-        sources: sources,
-        tags: tagsArr,
-        thumbnailUrl: thumbnailUrl,
-        fileName: fileName,
-        fileSize: fileSize,
+      songUrl: songUrl,
+      thumbnailUrl: thumbnailUrl,
+      songName: songName,
+      description: description,
+      availableDay: availableDay,
+      genres: genres,
+      fileSize: fileSize,
     }
     const blob = new Blob([JSON.stringify(obj)], { type: 'application/json' })
   
@@ -68,17 +64,24 @@ const storeWithProgress = async (files: any) => {
 }
 
 export const storeMetadata = async (
-    name: string,
-    context: string,
-    contains: string,
-    sources: string,
-    tags: SelectOption[],
-    thumbnailUrl: string,
-    fileName: string,
-    fileSize: number,
+  songUrl: string,
+  thumbnailUrl: string,
+  songName: string,
+  description: string,
+  availableDay: string,
+  genres: string,
+  fileSize: number,
 ) => {
-    if (!name || !context || !contains || !sources || !tags) return;
-    const files = makeFileObjects(name, context, contains, sources, tags, thumbnailUrl, fileName, fileSize);
+  if (!songName || !songUrl || !thumbnailUrl || !songName || !description || !availableDay || !genres || !fileSize) return;
+    const files = makeFileObjects(
+      songUrl,
+      thumbnailUrl,
+      songName,
+      description,
+      availableDay,
+      genres,
+      fileSize
+    );
     const cid = await storeWithProgress(files);
     console.log('Stored files with cid', cid);
     

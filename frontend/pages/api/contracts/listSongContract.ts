@@ -23,8 +23,7 @@ export const listSongContract = async (
             nftContract,
             mintPrice,
             {
-                gasLimit: 20000000,
-                gasPrice: ethers.utils.parseUnits("50", "gwei"),
+                
                 value: ethers.utils.parseEther("0.001"),
             }
         )

@@ -9,9 +9,9 @@ import {TextArea} from "../../modules/textArea";
 import {Modal} from "../../modules/modal";
 import {Preview} from "../../modules/preview";
 import {FollowSteps} from "../../modules/followSteps";
-import { SelectOption, TRoyaltiesMap } from "./types";
 import { deployEncrypted } from "../../../../utils/lighthouse/upload";
 import { storeMetadata, storeSongThumbnail } from "../../../../utils/web3Storage/store";
+import { convertToUnixTimestamp } from "../../../../utils/convertDate";
 
 const genresOptions = ["Classical", "Country", "Dance & EDM", "Hip-hop & Rap", "Pop", "R&B & Soul"];
 const dayOptions = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
@@ -19,16 +19,31 @@ const monthOptions = ["January", "February", "March", "April", "May", "June", "J
 const yearOptions = ["2023", "2024", "2025"];
 
 const getDayOptions = (month: string) => {
-    // Get the day options as above, but only for the days in the selected month
-    if (month === "February") {
-        return dayOptions.slice(0, 28);
-    } else if (["April", "June", "September", "November"].includes(month)) {
-        return dayOptions.slice(0, 30);
-    }
-    return dayOptions;
+  // Get the day options as above, but only for the days in the selected month
+  if (month === "February") {
+      return dayOptions.slice(0, 28);
+  } else if (["April", "June", "September", "November"].includes(month)) {
+      return dayOptions.slice(0, 30);
+  }
+  return dayOptions;
 }
 
-const UploadDatasetDetails:FC = () => {
+const monthMaps: Record<string, string> = {
+  "January": "1",
+  "February": "2",
+  "March": "3",
+  "April": "4",
+  "May": "5",
+  "June": "6",
+  "July": "7",
+  "August": "8",
+  "September": "9",
+  "October": "10",
+  "November": "11",
+  "December": "12"
+}
+
+const CreateSong:FC = () => {
   const [genres, setGenres] = useState<string>(genresOptions[0]);
   const [songName, setSongName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -51,6 +66,8 @@ const UploadDatasetDetails:FC = () => {
   const [day, setDay] = useState<string>(getDayOptions(month)[0]);
   const [year, setYear] = useState<string>(yearOptions[0]);
 
+  const [maxSupply, setMaxSupply] = useState<string>("");
+
   const handleSongUploaded = async (e: any) => {
     const res = await deployEncrypted(e);
     console.log(res); 
@@ -70,20 +87,23 @@ const UploadDatasetDetails:FC = () => {
   const handleCreateItem = async () => {
     setVisibleModal(true);
     if (songSize) {
-    //   const metadataUrl = await storeMetadata(
-    //     dataName, 
-    //     dataContext, 
-    //     dataContains, 
-    //     sources, 
-    //     tags,
-    //     thumbnailUrl,
-    //     fileName,
-    //     dataSize
-    //   );
-    //   console.log('Store metadata with url', metadataUrl);
-    //   if (metadataUrl) {
-    //     setMetadataUrl(metadataUrl);
-    //   }
+
+      // Format day DD/MM/YYYY format
+      // For example, July 15, 2023
+      const availableDay = `${month} ${day}, ${year}`;
+      const metadataUrl = await storeMetadata(
+        songUrl,
+        thumbnailUrl,
+        songName,
+        description,
+        availableDay,
+        genres,
+        songSize
+      );
+      console.log('Store metadata with url', metadataUrl);
+      if (metadataUrl) {
+        setMetadataUrl(metadataUrl);
+      }
     }
   }
 
@@ -237,6 +257,25 @@ const UploadDatasetDetails:FC = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className={styles.item}>
+                  <div className={styles.category}>Max supply of iniial NFTs for early fans</div>
+                  <div className={styles.fieldset}>
+                    <div className={styles.field}>
+                      <TextInput
+                        className={styles.field}
+                        label="Max supply"
+                        name="Max supply"
+                        type="text"
+                        placeholder="e.g. 10"
+                        required
+                        value={maxSupply}
+                        onChange={(e: any) => setMaxSupply(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+
               </div>
               <div className={styles.foot}>
                 <button
@@ -272,14 +311,14 @@ const UploadDatasetDetails:FC = () => {
       <Modal visible={visibleModal} onClose={() => setVisibleModal(false)}>
         <FollowSteps
           className={styles.steps}
-          dataUrl={"hungng"}
-          metadata={"hungng"}
-          feeNumerator={200}
-          price={Number(mintPrice)}
+          metadata={metadataUrl}
+          timestamp={convertToUnixTimestamp(day, monthMaps[month], year)}
+          maxSupply={Number(maxSupply)}
+          mintPrice={Number(mintPrice)}
         />
       </Modal>
     </>
   );
 };
 
-export default UploadDatasetDetails;
+export default CreateSong;
