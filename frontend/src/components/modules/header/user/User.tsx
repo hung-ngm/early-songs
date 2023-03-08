@@ -6,12 +6,13 @@ import OutsideClickHandler from "react-outside-click-handler";
 import styles from "./User.module.sass";
 import { Icon } from "../../icon";
 import { TUser } from "./types";
-import { signOut } from "next-auth/react";
-// import { useDisconnect } from "wagmi";
+import { signOut } from 'next-auth/react';
+import { useDisconnect } from "wagmi";
 
 const User: FC<TUser> = ({ className }) => {
   const [visible, setVisible] = useState(false);
-//   const { disconnect } = useDisconnect();
+  const { disconnect } = useDisconnect();
+  
 
   const fakeProfileUrl = "https://ohxhbrugimwjgzgtsbtn.supabase.co/storage/v1/object/public/datahotpot/HungProfile.jpeg"
   const fakeName = "Hung Nguyen";
@@ -73,7 +74,7 @@ const User: FC<TUser> = ({ className }) => {
                 rel="noopener noreferrer"
                 onClick={(e) => {
                   e.preventDefault()
-                    //   disconnect()
+                  disconnect()
                   signOut()
                 }}
               >
