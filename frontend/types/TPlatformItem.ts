@@ -9,4 +9,5 @@ export type TPlatformItem = {
     description: string;
     availableDay: string;
     genres: string;
+    fileSize: number;
 }
