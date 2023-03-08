@@ -3,7 +3,7 @@ import SharableSong from '../../../abis/ShareableSong.json';
 import { loadPlatformContracts } from './loadPlatformContracts';
 import { TNFTItem } from '../../../types/TNFTItem';
 
-export const loadMyNFTs = async (
+export const loadUserNFTs = async (
     address: string
 ) : Promise<TNFTItem[]> => {
     const provider = new ethers.providers.JsonRpcProvider("https://fantom-testnet.public.blastapi.io");

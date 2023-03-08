@@ -8,12 +8,13 @@ import { Icon } from "../../icon";
 import { TUser } from "./types";
 import { signOut } from 'next-auth/react';
 import { useDisconnect } from "wagmi";
+import { useSession } from "next-auth/react";
 
 const User: FC<TUser> = ({ className }) => {
   const [visible, setVisible] = useState(false);
   const { disconnect } = useDisconnect();
+  const { data: session } = useSession();
   
-
   const fakeProfileUrl = "https://ohxhbrugimwjgzgtsbtn.supabase.co/storage/v1/object/public/datahotpot/HungProfile.jpeg"
   const fakeName = "Hung Nguyen";
   
@@ -58,7 +59,7 @@ const User: FC<TUser> = ({ className }) => {
             <div className={styles.menu}>
               <CustomLink
                 className={styles.item}
-                href={`https://google.com`}
+                href={(session && session.user && session.user.name) ? `/user/${session.user.name}` : "/"}
                 onClick={() => setVisible(!visible)}
               >
                 <div className={styles.icon}>

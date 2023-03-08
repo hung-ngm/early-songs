@@ -8,7 +8,6 @@ import { User } from "./user";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
-
 const nav = [
     {
       url: "/explore",
@@ -22,7 +21,6 @@ const Header: FC = () => {
   const uploadTypeOptions = ["Dataset", "Issue"];
   const [uploadType, setUploadType] = useState(uploadTypeOptions[0]);
   const { data: session } = useSession();
-
 
   const handleSubmit = (e: React.FormEvent<HTMLElement>) => {
     alert();
