@@ -8,5 +8,5 @@ export type TNFTItem = {
     songName: string;
     description: string;
     availableDay: string;
-    genres: string[];
+    genres: string;
 }

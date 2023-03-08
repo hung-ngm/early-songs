@@ -5,14 +5,15 @@ import EarlySongsPlatform from '../../../abis/EarlySongsPlatform.json';
 import SharableSong from '../../../abis/ShareableSong.json';
 import { TPlatformItem } from '../../../types/TPlatformItem';
 
-export const loadPlatformContracts = async () : Promise<TPlatformItem[]> => {
-    const provider = new ethers.providers.JsonRpcProvider("https://fantom-testnet.public.blastapi.io");
+export const loadPlatformContracts = async () : Promise<any[]> => {
+    const provider = new ethers.providers.JsonRpcProvider("https://rpc.testnet.fantom.network");
     const platformContract = new ethers.Contract(
         earlySongsPlatformAddress,
         EarlySongsPlatform.abi,
         provider
     );
     const data = await platformContract.fetchPlatformItems();
+    console.log('data', data);
     const items = await Promise.all(data.map(async (i: any) => {
         const songContract = new ethers.Contract(
             i.nftContract,
@@ -34,8 +35,7 @@ export const loadPlatformContracts = async () : Promise<TPlatformItem[]> => {
         // available day: string
         // genres: array of string
         // fileSize: number
-
-        
+  
         const item = {
             itemId: Number(i.itemId),
             nftContract: i.nftContract,
@@ -51,5 +51,6 @@ export const loadPlatformContracts = async () : Promise<TPlatformItem[]> => {
         return item;
     }))
 
+    
     return items;
 }
