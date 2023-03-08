@@ -5,8 +5,10 @@ import EarlySongsPlatform from '../../../abis/EarlySongsPlatform.json';
 import SharableSong from '../../../abis/ShareableSong.json';
 import { TPlatformItem } from '../../../types/TPlatformItem';
 
+const FANTOM_TESTNET_URL = process.env.NEXT_PUBLIC_FANTOM_TESTNET_URL || ""
+
 export const loadPlatformContracts = async () : Promise<TPlatformItem[]> => {
-    const provider = new ethers.providers.JsonRpcProvider("https://rpc.testnet.fantom.network");
+    const provider = new ethers.providers.JsonRpcProvider(FANTOM_TESTNET_URL);
     const platformContract = new ethers.Contract(
         earlySongsPlatformAddress,
         EarlySongsPlatform.abi,
@@ -24,6 +26,11 @@ export const loadPlatformContracts = async () : Promise<TPlatformItem[]> => {
         const metadataUrl = await songContract.getMetadata();
         const wei = ethers.utils.formatUnits(i.mintPrice.toString(), 'wei');
         const metadata = await axios.get(metadataUrl);
+
+        const alreadyMinted = await songContract.getCurrentTokenId();
+        const numAlreadyMinted = ethers.utils.formatUnits(alreadyMinted.toString(), 'wei');
+        const maxSupply = await songContract.getMaxSupply();
+        const numMaxSupply = ethers.utils.formatUnits(maxSupply.toString(), 'wei');
         
         // Metadata should include:
         
@@ -48,6 +55,8 @@ export const loadPlatformContracts = async () : Promise<TPlatformItem[]> => {
             availableDay: metadata.data.availableDay,
             genres: metadata.data.genres,
             fileSize: metadata.data.fileSize,
+            alreadyMinted: numAlreadyMinted,
+            maxSupply: numMaxSupply,
         }
         return item;
     }))
