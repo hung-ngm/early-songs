@@ -19,13 +19,10 @@ export const mintNewNFT = async (
         )
 
         const tx = await earlySongsPlatform.mintNewNFT(itemId);
-        const resTx = await tx.wait();
-
-        // Get the tokenId returned from the events
-        const [transferEvent] = resTx.events;
-        const { newTokenId } = transferEvent.args;
-        console.log('New tokenId created: ', newTokenId);
-        return newTokenId.toNumber();
+        const receipt = await tx.wait();
+        
+        console.log('receipt', receipt);
+        return 1;
     
     } catch (err) {
         console.log(err);

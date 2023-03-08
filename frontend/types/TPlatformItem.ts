@@ -2,7 +2,7 @@ export type TPlatformItem = {
     itemId: number;
     nftContract: string;
     artist: string;
-    mintPrice: number;
+    mintPrice: string;
     songUrl: string;
     thumbnailUrl: string;
     songName: string;
@@ -10,4 +10,6 @@ export type TPlatformItem = {
     availableDay: string;
     genres: string;
     fileSize: number;
+    alreadyMinted: string;
+    maxSupply: string;
 }
