@@ -6,6 +6,7 @@ import { Image } from "../image";
 import { Icon } from "../icon";
 import { User } from "./user";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const nav = [
     {
@@ -19,6 +20,7 @@ const Header: FC = () => {
   const [search, setSearch] = useState("");
   const uploadTypeOptions = ["Dataset", "Issue"];
   const [uploadType, setUploadType] = useState(uploadTypeOptions[0]);
+  const { data: session } = useSession();
 
   const handleSubmit = (e: React.FormEvent<HTMLElement>) => {
     alert();
@@ -66,7 +68,7 @@ const Header: FC = () => {
           </form>
           
         </div>
-        {(1) ? (
+        {(session && session.user) ? (
           <>
             <CustomLink
               className={cn("button-small", styles.button)}
