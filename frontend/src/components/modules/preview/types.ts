@@ -4,5 +4,4 @@ export type TPreview = {
     songName: string,
     mintPrice: string,
     thumbnailUrl: string,
-    songSize: number | undefined
 }

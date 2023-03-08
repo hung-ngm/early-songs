@@ -1,1 +1,1 @@
-export const earlySongsPlatformAddress = "0x99A19a5adCe95Cb1EEcE9534DA62e34e487db36C";
+export const earlySongsPlatformAddress = "0x24848b57d7016e12be21802DE4DC48b479Dd0094";

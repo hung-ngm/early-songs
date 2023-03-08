@@ -27,6 +27,7 @@ export const loadUserNFTs = async (
             if (owner.toLowerCase() === address.toLowerCase()) {
                 const nft = {
                     tokenId: j,
+                    contractItemId: platformContractsJson[i].itemId,
                     nftContract: platformContractsJson[i].nftContract,
                     artist: platformContractsJson[i].artist,
                     mintPrice: platformContractsJson[i].mintPrice,

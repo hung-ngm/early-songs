@@ -9,7 +9,7 @@ import {TextArea} from "../../modules/textArea";
 import {Modal} from "../../modules/modal";
 import {Preview} from "../../modules/preview";
 import {FollowSteps} from "../../modules/followSteps";
-import { deployEncrypted } from "../../../../utils/lighthouse/upload";
+import { uploadSong } from "../../../../utils/web3Storage/upload";
 import { storeMetadata, storeSongThumbnail } from "../../../../utils/web3Storage/store";
 import { convertToUnixTimestamp } from "../../../../utils/convertDate";
 
@@ -55,7 +55,6 @@ const CreateSong:FC = () => {
   
   // Used in lighthouse upload
   const [songUrl, setSongUrl] = useState<string>("");
-  const [songSize, setSongSize] = useState<number>();
 
   // Used in web3 storage metadata upload
   const [metadataUrl, setMetadataUrl] = useState<string>("");
@@ -69,11 +68,9 @@ const CreateSong:FC = () => {
   const [maxSupply, setMaxSupply] = useState<string>("");
 
   const handleSongUploaded = async (e: any) => {
-    const res = await deployEncrypted(e);
+    const res = await uploadSong(e);
     console.log(res); 
-    const { SongUrl, Size } = res;
-    setSongUrl(SongUrl);
-    setSongSize(Size);
+    setSongUrl(res);
   }
 
   const handleThumbnailUploaded = async (e: any) => {
@@ -86,25 +83,23 @@ const CreateSong:FC = () => {
   
   const handleCreateItem = async () => {
     setVisibleModal(true);
-    if (songSize) {
 
-      // Format day DD/MM/YYYY format
-      // For example, July 15, 2023
-      const availableDay = `${month} ${day}, ${year}`;
-      const metadataUrl = await storeMetadata(
-        songUrl,
-        thumbnailUrl,
-        songName,
-        description,
-        availableDay,
-        genres,
-        songSize
-      );
-      console.log('Store metadata with url', metadataUrl);
-      if (metadataUrl) {
-        setMetadataUrl(metadataUrl);
-      }
+    // Format day DD/MM/YYYY format
+    // For example, July 15, 2023
+    const availableDay = `${month} ${day}, ${year}`;
+    const metadataUrl = await storeMetadata(
+      songUrl,
+      thumbnailUrl,
+      songName,
+      description,
+      availableDay,
+      genres,
+    );
+    console.log('Store metadata with url', metadataUrl);
+    if (metadataUrl) {
+      setMetadataUrl(metadataUrl);
     }
+    
   }
 
   return (
@@ -304,7 +299,6 @@ const CreateSong:FC = () => {
             songName = {songName}
             mintPrice = {mintPrice}
             thumbnailUrl = {thumbnailUrl}
-            songSize = {songSize}
           />
         </div>
       </div>
