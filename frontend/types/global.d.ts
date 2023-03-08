@@ -67,6 +67,9 @@ declare module 'body-scroll-lock' {
   export as namespace bodyScrollLock;
 }
 
+declare module '*.mp3';
+
+
 declare global {
   interface Window {
     ethereum: import('ethers').providers.ExternalProvider;

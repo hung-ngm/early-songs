@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
-import { Layout } from '../../src/components/layout';
-import useSingleContract from '../../src/hooks/useSingleContract';
-import { Details } from '../../src/components/templates/details';
+import { Layout } from '../../../src/components/layout';
+import useSingleContract from '../../../src/hooks/useSingleContract';
+import { Details } from '../../../src/components/templates/details';
 
 const DetailsPage: NextPage = () => {
     const singlePlatformItem = useSingleContract();

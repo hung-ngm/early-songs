@@ -6,7 +6,7 @@ import {Icon} from "../icon";
 import {TPreview} from "./types";
 import Interpunct from "react-interpunct";
 
-const Preview: FC<TPreview> = ({ className, onClose, songName, mintPrice, thumbnailUrl, songSize }) => {
+const Preview: FC<TPreview> = ({ className, onClose, songName, mintPrice, thumbnailUrl }) => {
   return (
     <div className={cn(className, styles.wrap)}>
       <div className={styles.inner}>
@@ -33,7 +33,6 @@ const Preview: FC<TPreview> = ({ className, onClose, songName, mintPrice, thumbn
               <div className = {styles.line2}>
                   <div className={styles.files}>1 file (MP3)</div>
                   <Interpunct /> 
-                  <div className={styles.limitSize}>{songSize} MB</div>
               </div>
               <div className={styles.avatar}>
                   <img src="/images/content/avatar-3.jpg" alt="Avatar" />

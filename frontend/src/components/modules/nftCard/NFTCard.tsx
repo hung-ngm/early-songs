@@ -8,7 +8,7 @@ import { Icon } from "../icon";
 import Interpunct from "react-interpunct";
 
 const Card: FC<TNFTCard> = ({ className, item, text }) => {
-  const href: string = "/nft-details/" + item.tokenId;
+  const href: string = "/details/" + item.contractItemId + "/" + item.tokenId;
 
   return (
     <div className={cn(styles.card, className)}>

@@ -13,13 +13,12 @@ const makeFileObjects = (
     description: string,
     availableDay: string,
     genres: string,
-    fileSize: number,
 ) => {
     // You can create File objects from a Blob of binary data
     // see: https://developer.mozilla.org/en-US/docs/Web/API/Blob
     // Here we're just storing a JSON object, but you can store images,
     // audio, or whatever you want!
-    if (!songName || !songUrl || !thumbnailUrl || !songName || !description || !availableDay || !genres || !fileSize) return;
+    if (!songName || !songUrl || !thumbnailUrl || !songName || !description || !availableDay || !genres) return;
     
     
     const obj = { 
@@ -29,7 +28,6 @@ const makeFileObjects = (
       description: description,
       availableDay: availableDay,
       genres: genres,
-      fileSize: fileSize,
     }
     const blob = new Blob([JSON.stringify(obj)], { type: 'application/json' })
   
@@ -70,9 +68,8 @@ export const storeMetadata = async (
   description: string,
   availableDay: string,
   genres: string,
-  fileSize: number,
 ) => {
-  if (!songName || !songUrl || !thumbnailUrl || !songName || !description || !availableDay || !genres || !fileSize) return;
+  if (!songName || !songUrl || !thumbnailUrl || !songName || !description || !availableDay || !genres) return;
     const files = makeFileObjects(
       songUrl,
       thumbnailUrl,
@@ -80,7 +77,6 @@ export const storeMetadata = async (
       description,
       availableDay,
       genres,
-      fileSize
     );
     const cid = await storeWithProgress(files);
     console.log('Stored files with cid', cid);
