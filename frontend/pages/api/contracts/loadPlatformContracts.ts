@@ -25,12 +25,16 @@ export const loadPlatformContracts = async () : Promise<TPlatformItem[]> => {
         const metadata = await axios.get(metadataUrl);
         
         // Metadata should include:
+        
         // songUrl: string
         // thumbnailUrl: string
+
         // songName: string
         // description: string
         // available day: string
         // genres: array of string
+        // fileSize: number
+
         
         const item = {
             itemId: Number(i.itemId),
