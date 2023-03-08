@@ -8,11 +8,13 @@ import styles from "./NFTDetails.module.sass";
 import { TPlatformItem } from "../../../../types/TPlatformItem";
 import { TNFTDetails } from "./types";
 import { Button } from "../../modules/button";
+import { TextInput } from "../../modules/textInput";
 import { mintNewNFT } from "../../../../pages/api/contracts/mintNewNFT";
 import useSound from "use-sound";
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai";
 import { BiSkipNext, BiSkipPrevious } from "react-icons/bi";
 import { IconContext } from "react-icons";
+import { shareNFT } from "../../../../pages/api/contracts/shareNFT";
 
 const NFTDetails: FC<TNFTDetails> = ({ item }) => {
   const [audio, setAudio] = useState<ArrayBuffer>();
@@ -27,6 +29,7 @@ const NFTDetails: FC<TNFTDetails> = ({ item }) => {
   });
 
   const [seconds, setSeconds] = useState();
+  const [address, setAddress] = useState<string>("");
   
   useEffect(() => {
     const loadAudio = async () => {
@@ -76,6 +79,24 @@ const NFTDetails: FC<TNFTDetails> = ({ item }) => {
     }
   };
 
+  const [shareLoading, setShareLoading] = useState<boolean>(false);
+  const [shareSuccess, setShareSuccess] = useState<boolean>(false);
+
+  const handleShareNFT = async () => {
+    setShareLoading(true);
+    if (address) {
+        const res = await shareNFT(item.contractItemId, item.tokenId, address);
+        if (res) {
+            setShareSuccess(true);
+            setShareLoading(false);
+        } else {
+            setShareLoading(false);
+            setShareSuccess(false);
+        }
+    }
+    
+  }
+
   return (
     <>
       <div className={cn("section", styles.section)}>
@@ -101,7 +122,7 @@ const NFTDetails: FC<TNFTDetails> = ({ item }) => {
             <div className={styles.cost}>
               <div className={styles.col}>
                 <div className={cn("status-stroke-green", styles.price)}>
-                  {item.mintPrice} FTM
+                  Token Id: #{item.tokenId}
                 </div>
               </div>
               
@@ -168,6 +189,33 @@ const NFTDetails: FC<TNFTDetails> = ({ item }) => {
             <h2 className={cn("h3", styles.title)}>Available: {item.availableDay}</h2>
             <div className={styles.info}>
                 Consumers are free to share the NFT after {item.availableDay}
+            </div>
+
+            <div className={styles.cost}>
+              <div className={styles.col}>
+                <div className={styles.fieldset}>
+                  <TextInput
+                    className={styles.field}
+                    label="Address"
+                    name="Address"
+                    type="text"
+                    placeholder='0x..."'
+                    required
+                    value={address}
+                    onChange={(e: any) => setAddress(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className={styles.col}>
+                <Button
+                  loading={shareLoading}
+                  success={shareSuccess}
+                  disabled={false}
+                  name="Share now"
+                  onClick={async () => { await handleShareNFT() }}
+                />
+              </div>
+    
             </div>
 
           </div>
