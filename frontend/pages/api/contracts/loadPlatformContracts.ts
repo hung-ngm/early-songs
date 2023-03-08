@@ -5,7 +5,7 @@ import EarlySongsPlatform from '../../../abis/EarlySongsPlatform.json';
 import SharableSong from '../../../abis/ShareableSong.json';
 import { TPlatformItem } from '../../../types/TPlatformItem';
 
-export const loadPlatformContracts = async () : Promise<any[]> => {
+export const loadPlatformContracts = async () : Promise<TPlatformItem[]> => {
     const provider = new ethers.providers.JsonRpcProvider("https://rpc.testnet.fantom.network");
     const platformContract = new ethers.Contract(
         earlySongsPlatformAddress,
@@ -47,6 +47,7 @@ export const loadPlatformContracts = async () : Promise<any[]> => {
             description: metadata.data.description,
             availableDay: metadata.data.availableDay,
             genres: metadata.data.genres,
+            fileSize: metadata.data.fileSize,
         }
         return item;
     }))
